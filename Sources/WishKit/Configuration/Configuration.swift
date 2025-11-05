@@ -23,7 +23,7 @@ public struct Configuration {
 
     public var dropShadow: Display = .show
 
-    public var cornerRadius: CGFloat = 16
+    public var cornerRadius: CGFloat = 23
 
     public var emailField: EmailField = .optional
 

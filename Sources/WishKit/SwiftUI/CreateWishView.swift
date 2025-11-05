@@ -81,11 +81,13 @@ struct CreateWishView: View {
                             Spacer()
                             Text("\(titleText.count)/50")
                         }
-                        .font(.caption2)
+                        .font(.subheadline)
+                        .foregroundColor(Color(UIColor.secondaryLabel))
                         .padding([.leading, .trailing, .bottom], 5)
+                        .padding(.horizontal, 12)
 
                         TextField("", text: $titleText)
-                            .padding(10)
+                            .padding(16)
                             .textFieldStyle(.plain)
                             .foregroundColor(textColor)
                             .background(fieldBackgroundColor)
@@ -99,11 +101,13 @@ struct CreateWishView: View {
                             Spacer()
                             Text("\(descriptionText.count)/500")
                         }
-                        .font(.caption2)
+                        .font(.subheadline)
+                        .foregroundColor(Color(UIColor.secondaryLabel))
                         .padding([.leading, .trailing, .bottom], 5)
+                        .padding(.horizontal, 12)
 
                         TextEditor(text: $descriptionText)
-                            .padding([.leading, .trailing], 5)
+                            .padding([.leading, .trailing], 12)
                             .padding([.top, .bottom], 10)
                             .lineSpacing(3)
                             .frame(height: 200)
@@ -119,21 +123,23 @@ struct CreateWishView: View {
                             HStack {
                                 if WishKit.config.emailField == .optional {
                                     Text(WishKit.config.localization.emailOptional)
-                                        .font(.caption2)
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(UIColor.secondaryLabel))
                                         .padding([.leading, .trailing, .bottom], 5)
                                 }
 
                                 if WishKit.config.emailField == .required {
                                     Text(WishKit.config.localization.emailRequired)
-                                        .font(.caption2)
+                                        .font(.subheadline)
+                                        .foregroundColor(Color(UIColor.secondaryLabel))
                                         .padding([.leading, .trailing, .bottom], 5)
                                 }
 
                                 Spacer()
-                            }
+                            }.padding(.horizontal, 12)
 
                             TextField("", text: $emailText)
-                                .padding(10)
+                                .padding(16)
                                 .textFieldStyle(.plain)
                                 .foregroundColor(textColor)
                                 .background(fieldBackgroundColor)
@@ -153,6 +159,7 @@ struct CreateWishView: View {
                         size: saveButtonSize
                     )
                     .disabled(isButtonDisabled)
+                    .padding(.top, 8)
                     .alert(isPresented: $alertModel.showAlert) {
 
                         switch alertModel.alertReason {
@@ -213,7 +220,7 @@ struct CreateWishView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(backgroundColor)
+        .background(backgroundColor.ignoresSafeArea(.all))
         .ignoresSafeArea(edges: [.leading, .trailing])
         .toolbarKeyboardDoneButton()
     }

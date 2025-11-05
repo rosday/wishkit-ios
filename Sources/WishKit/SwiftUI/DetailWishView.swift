@@ -93,7 +93,7 @@ struct DetailWishView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(backgroundColor)
+        .background(backgroundColor.ignoresSafeArea(.all))
     }
 
     private func showCloseButton() -> Bool {

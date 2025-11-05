@@ -82,35 +82,31 @@ struct WishView: View {
             }
 
             VStack(spacing: 5) {
-                HStack {
+                HStack(alignment: .top) {
                     Text(wishResponse.title)
                         .foregroundColor(textColor)
-                        .font(.system(size: 17))
+                        .font(.body)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.leading)
-                        .lineLimit(viewKind == .list ? 1 : nil)
-
-                    Spacer()
+                        .frame(maxWidth: .infinity, alignment: .leading)
 
                     if viewKind == .list && WishKit.config.statusBadge == .show {
                         Text(wishResponse.state.description.uppercased())
                             .opacity(0.8)
-                            .font(.system(size: 10, weight: .medium))
-                            .padding(EdgeInsets(top: 3, leading: 5, bottom: 3, trailing: 5))
+                            .font(.system(size: 10, weight: .semibold))
+                            .padding(EdgeInsets(top: 3, leading: 8, bottom: 3, trailing: 8))
                             .foregroundColor(.primary)
                             .background(badgeColor(for: wishResponse.state).opacity(1/3))
-                            .cornerRadius(6)
+                            .clipShape(Capsule())
                     }
                 }
 
-                HStack {
-                    Text(wishResponse.description)
-                        .foregroundColor(textColor)
-                        .font(.system(size: 13))
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(descriptionLineLimit)
-                    Spacer()
-                }
+                Text(wishResponse.description)
+                    .foregroundColor(textColor)
+                    .font(.callout)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .lineLimit(descriptionLineLimit)
             }
         }
         .padding([.top, .bottom, .trailing], 10)

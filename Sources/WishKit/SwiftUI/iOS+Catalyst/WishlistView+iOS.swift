@@ -154,6 +154,7 @@ struct WishlistViewIOS: View {
             }
 
             ScrollView {
+                
                 VStack {
 
                     if WishKit.config.buttons.segmentedControl.display == .show {
@@ -175,7 +176,7 @@ struct WishlistViewIOS: View {
                                 DetailWishView(wishResponse: wish, voteActionCompletion: { wishModel.fetchList() })
                             }, label: {
                                 WishView(wishResponse: wish, viewKind: .list, voteActionCompletion: { wishModel.fetchList() })
-                                    .padding(.all, 5)
+                                    .padding(.vertical, 5)
                                     .frame(maxWidth: 700)
                             })
                         }.transition(.opacity)
@@ -186,32 +187,9 @@ struct WishlistViewIOS: View {
             }
             .refreshableCompat(action: { await wishModel.fetchList() })
             .padding([.leading, .bottom, .trailing])
-
-
-            if WishKit.config.buttons.addButton.location == .floating {
-                HStack {
-                    Spacer()
-                    
-                    VStack(alignment: .trailing) {
-                        VStack {
-                            Spacer()
-                            
-                            if WishKit.config.buttons.addButton.display == .show {
-                                NavigationLink(
-                                    destination: {
-                                        CreateWishView(createActionCompletion: { wishModel.fetchList() })
-                                    }, label: {
-                                        AddButton(size: CGSize(width: 60, height: 60))
-                                    }
-                                )
-                            }
-                        }.padding(.bottom, addButtonBottomPadding)
-                    }.padding(.trailing, 20)
-                }.frame(maxWidth: 700)
-            }
         }
         .frame(maxWidth: .infinity)
-        .background(backgroundColor)
+        .background(backgroundColor.ignoresSafeArea(.all))
         .ignoresSafeArea(edges: [.leading, .bottom, .trailing])
         .navigationTitle(WishKit.config.localization.featureWishlist)
         .navigationBarTitleDisplayMode(.inline)
@@ -233,7 +211,10 @@ struct WishlistViewIOS: View {
                         destination: {
                             CreateWishView(createActionCompletion: { wishModel.fetchList() })
                         }, label: {
-                            Text(WishKit.config.localization.addButtonInNavigationBar)
+                            if #available(iOS 26.0, *) {
+                                Image(systemName: "plus")
+                                    .glassEffect(.regular.interactive(), in: Circle() )
+                            }
                         }
                     )
                 }

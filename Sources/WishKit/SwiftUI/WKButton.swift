@@ -39,23 +39,45 @@ struct WKButton: View {
     }
 
     var body: some View {
-        Button(action: action) {
-            if isLoading ?? false {
-                ProgressView()
-                    .scaleEffect(0.5)
-            } else {
-                Text(text)
-                    .foregroundColor(textColor)
-                    .frame(width: size.width, height: size.height)
-                    .background(getColor(for: style))
-                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 5)))
+        if #available(iOS 26.0, *) {
+            Button(action: action) {
+                if isLoading ?? false {
+                    HStack {
+                        ProgressView()
+                            .padding(.vertical, 10)
+                            .padding(.bottom, 2)
+                    }.frame(maxWidth: .infinity, alignment: .center)
+                } else {
+                    Text(text)
+                        .foregroundColor(textColor)
+                        .padding(.vertical, 10)
+                        .padding(.bottom, 2)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                }
             }
+            .buttonStyle(GlassProminentButtonStyle())
+            .clipShape(Capsule())
+            .disabled(isLoading ?? false)
+            .padding(.top, 4)
+        } else {
+            Button(action: action) {
+                if isLoading ?? false {
+                    ProgressView()
+                        .scaleEffect(0.5)
+                } else {
+                    Text(text)
+                        .foregroundColor(textColor)
+                        .frame(width: size.width, height: size.height)
+                        .background(getColor(for: style))
+                        .clipShape(RoundedRectangle(cornerSize: CGSize(width: 5, height: 5)))
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+            .frame(width: size.width, height: size.height)
+            .background(getColor(for: style))
+            .clipShape(Capsule())
+            .disabled(isLoading ?? false)
         }
-        .buttonStyle(PlainButtonStyle())
-        .frame(width: size.width, height: size.height)
-        .background(getColor(for: style))
-        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-        .disabled(isLoading ?? false)
     }
 
     func getColor(for style: ButtonStyle) -> Color {
