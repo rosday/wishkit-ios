@@ -214,6 +214,9 @@ struct WishlistViewIOS: View {
                             if #available(iOS 26.0, *) {
                                 Image(systemName: "plus")
                                     .glassEffect(.regular.interactive(), in: Circle() )
+                            } else {
+                                Image(systemName: "plus")
+                                    .foregroundStyle(.accentColor)
                             }
                         }
                     )
