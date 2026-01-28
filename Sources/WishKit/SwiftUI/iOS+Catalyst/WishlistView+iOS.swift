@@ -216,7 +216,7 @@ struct WishlistViewIOS: View {
                                     .glassEffect(.regular.interactive(), in: Circle() )
                             } else {
                                 Image(systemName: "plus")
-                                    .foregroundStyle(.accent)
+                                    .foregroundColor(.accent)
                             }
                         }
                     )
